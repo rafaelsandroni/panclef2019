@@ -58,6 +58,7 @@ def load(lang='en',split_test=0.2, dataframe_path='../'):
 
 if __name__ == '__main__':
 
-    path = 'pan19-author-profiling-training-2019-01-28'
+    #path = 'pan19-author-profiling-training-2019-01-28'
+    path = 'pan19-author-profiling-training-2019-02-18'
     convert_xml_to_csv(path, lang='en')
     convert_xml_to_csv(path, lang='es')
