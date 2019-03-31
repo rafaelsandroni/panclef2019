@@ -3,9 +3,8 @@ import xml.etree.ElementTree as etree
 
 # read
 
-panclef_2019_ap = 'pan19-author-profiling-training-2019-01-28'
 
-def convert_xml_to_csv(lang='en'):
+def convert_xml_to_csv(panclef_2019_ap, lang='en'):
     # load xml for each language
     data_path = os.path.join(panclef_2019_ap,lang)
     label_path = os.path.join(panclef_2019_ap,lang,'truth.txt')    
@@ -36,13 +35,13 @@ def convert_xml_to_csv(lang='en'):
             df = df.append({'author_id': author_id, 'text': text, 'gender': gender, 'entity': entity, 'seq': i}, ignore_index=True)			
         
     # df.set_index('author_id')
-    print(df.head())
+    #print(df.head())
 
     # convert xml to text
     # concat text for each author
     # save a dataframe for each language
-    df.to_csv("df.csv")
-    pass
+    df.to_csv("df_"+str(lang)+".csv", index=False, encoding='utf-8')
+    return df
 
 def load(lang='en',split_test=0.2, dataframe_path='../'):
     # check if dataframe file exists
@@ -58,4 +57,7 @@ def load(lang='en',split_test=0.2, dataframe_path='../'):
 
 
 if __name__ == '__main__':
-    convert_xml_to_csv()
+
+    path = 'pan19-author-profiling-training-2019-01-28'
+    convert_xml_to_csv(path, lang='en')
+    convert_xml_to_csv(path, lang='es')
