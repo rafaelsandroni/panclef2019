@@ -4,12 +4,6 @@
 # In[1]:
 
 
-get_ipython().system('ls')
-
-
-# In[2]:
-
-
 import pandas as pd, numpy as np, os, sys
 
 
@@ -23,7 +17,7 @@ from datasets import dataset
 
 
 #df = dataset.convert_xml_to_csv('datasets/pan19-author-profiling-training-2019-01-28','en')
-df = pd.read_csv('df.csv')
+df = pd.read_csv('./datasets/df_en.csv')
 
 
 # In[5]:
@@ -87,10 +81,10 @@ from sklearn.metrics import classification_report, accuracy_score, confusion_mat
 
 # In[12]:
 
-
+"""
 X_train, X_test, y_train, y_test = train_test_split(text_bot, is_bot, test_size=0.2)
 print(np.array(X_train).shape, np.array(y_train).shape, np.array(X_test).shape, np.array(y_test).shape)
-"""
+
 vect = TfidfVectorizer(analyzer='word')
 
 X_train_v = vect.fit_transform(X_train)
@@ -112,7 +106,7 @@ print(confusion_matrix(y_test, y_pred))
 
 # In[23]:
 
-
+"""
 X_train, X_test, y_train, y_test = train_test_split(text_gender, gender, test_size=0.2)
 print(np.array(X_train).shape, np.array(y_train).shape, np.array(X_test).shape, np.array(y_test).shape)
 
@@ -130,11 +124,11 @@ y_pred = clf.predict(X_test_v)
 print(classification_report(y_test, y_pred)) 
 print(accuracy_score(y_test, y_pred)) 
 print(confusion_matrix(y_test, y_pred))
-
+"""
 
 # In[ ]:
 
-
+"""
 X_train, X_test, y_train, y_test = train_test_split(text_gender, gender, test_size=0.2)
 print(np.array(X_train).shape, np.array(y_train).shape, np.array(X_test).shape, np.array(y_test).shape)
 
@@ -152,7 +146,7 @@ y_pred = clf.predict(X_test_v)
 print(classification_report(y_test, y_pred)) 
 print(accuracy_score(y_test, y_pred)) 
 print(confusion_matrix(y_test, y_pred))
-
+"""
 
 # In[14]:
 
