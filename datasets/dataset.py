@@ -4,16 +4,18 @@ import xml.etree.ElementTree as etree
 # read
 
 
-def convert_xml_to_csv(panclef_2019_ap, lang='en'):
+def convert_xml_to_csv(panclef_2019_ap, lang='en', run=False):
     # load xml for each language
     data_path = os.path.join(panclef_2019_ap,lang)
-    label_path = os.path.join(panclef_2019_ap,lang,'truth.txt')    
-    print(label_path)
-    label_data = open(label_path)
-    label_dict = dict()
-    for i in label_data:
-        author_id, entity, gender = i.split(":::")
-        label_dict[author_id] = [entity, gender.replace("\n","")]
+    
+    if not run:
+        label_path = os.path.join(panclef_2019_ap,lang,'truth.txt')    
+        print(label_path)
+        label_data = open(label_path)
+        label_dict = dict()
+        for i in label_data:
+            author_id, entity, gender = i.split(":::")
+            label_dict[author_id] = [entity, gender.replace("\n","")]
 
     # print(label_dict)
 
@@ -31,16 +33,19 @@ def convert_xml_to_csv(panclef_2019_ap, lang='en'):
         root = tree.getroot()
         for i in range(len(root[0])):
             text = root[0][i].text
-            entity, gender = label_dict[author_id]
-            df = df.append({'author_id': author_id, 'text': text, 'gender': gender, 'entity': entity, 'seq': i}, ignore_index=True)			
-        
+            if not run:
+                entity, gender = label_dict[author_id]
+                df = df.append({'author_id': author_id, 'text': text, 'gender': gender, 'entity': entity, 'seq': i}, ignore_index=True)			
+            else:
+                df = df.append({'author_id': author_id, 'text': text, 'gender': i, 'entity': i, 'seq': i}, ignore_index=True)
     # df.set_index('author_id')
     #print(df.head())
 
     # convert xml to text
     # concat text for each author
     # save a dataframe for each language
-    df.to_csv("df_"+str(lang)+".csv", index=False, encoding='utf-8')
+    if not run:
+        df.to_csv("df_"+str(lang)+".csv", index=False, encoding='utf-8')
     return df
 
 def load(lang='en',split_test=0.2, dataframe_path='../'):
